@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-compatible" content="IE-edge"/>
+<meta name="viewport" content="width=device-width ,initial-scale=1.0"/>
+<title>Text to Speech Converter</title>
+<style type="text/css">
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+*{
+padding:0;
+margin:0;
+box-sizing:border-box;
+transition:all .5s .2s linear;
+font-family:'Poppins',sans-serif;
+}
+body{
+background:#5a3bda;
+display:flex;
+flex-direction:column;
+min-height:100vh;
+justify-content:center;
+align-items:center;
+}
+.wrapper{
+background:#eee;
+border-radius:7px;
+padding:20px 20px 40px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+gap:20px;
+width:64vw;
+}
+.text,.select,.convert-btn{
+outline:none;
+border-radius:7px;
+height:200px;
+width:100%;
+padding:7px;
+border:solid 1px;
+}
+.wrapper input{
+width:100%;
+accent-color:#5a3bda;
+}
+.select,.convert-btn{
+height:40px;
+text-align:center;
+background:#5a3bda;
+color:#eee;
+}
+.wrapper button:hover{
+background:#eee;
+color:#111;
+}
+</style>
+</head>
+<body>
+<section class="wrapper">
+<h2>Text to Speech</h2>
+<textarea class="text" placeholder="Enter text !"></textarea>
+<h3>Select Voice</h3>
+<select class="select">
+<option data-name="English" data-lang="en-US">English-(US)</option>
+</select>
+<h3>Speed</h3>
+    <input type="range" min="0.5" max="2" value="1" step="0.1" class="rate"/>
+<h3>Pitch</h3>
+    <input type="range" min="0" max="2" value="1" step="0.1" class="pitch"/>
+<h3>Volume</h3>
+    <input type="range" min="0" max="9" value="1" step="1" class="volume"/>
+<button class="convert-btn">Convert text</button>
+</section>
+
+<script type="text/javascript">
+const text = document.querySelector('.text'),
+voicesSelect = document.querySelector('.select'),
+voiceOptions = document.querySelector('.select option'),
+convertBtn = document.querySelector('.convert-btn');
+
+convertBtn.addEventListener('click',()=>{
+let speech = new SpeechSynthesisUtterance(text.value),
+volume = document.querySelector('.volume'),
+speed = document.querySelector('.rate'),
+pitch = document.querySelector('.pitch');
+/*
+voices=[];
+voices = speech.getVoices();
+voices.forEach(voice=>{
+let option = `<option data-lang="${voice.lang}" data-name="${voice.name}">${voice.name}-(${voice.lang})</option>`;
+voicesSelect.innerHTML += option;
+});
+*/
+if(text.value != ''){
+/*
+voiceOptions.forEach(option=>{
+speech.name=option.data-name;
+speech.lang=option.data-lang;
+});
+*/
+speech.volume=volume.value;
+speech.rate=speed.value
+speech.pitch=pitch.value
+speechSynthesis.speak(speech);
+/*
+convertBtn.innerText='Pause speech';
+if(convertBtn.innerText=='Pause speech'){
+convertBtn.onclick=()=>{
+speech.pause;
+}
+convertBtn.innerText='Resume speech';
+}
+if(convertBtn.innerText=='Resume speech'){
+convertBtn.onclick=()=>{
+speech.resume;
+}
+convertBtn.innerText='Pause speech';
+}
+*/
+}
+});
+
+</script>
+</body>
+</html>
